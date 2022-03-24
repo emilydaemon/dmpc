@@ -28,7 +28,7 @@ while true; do
 			mpc prev
 			;;
 		"change song")
-			mpc playlist | nl -s ' ' | dmenu -i -p "Current song: $(mpc play | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
+			mpc playlist | nl -s ' ' | dmenu -i -p "Current song: $(mpc | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
 			;;
 		"update database")
 			mpc update
