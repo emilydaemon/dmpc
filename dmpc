@@ -1,0 +1,57 @@
+#!/bin/sh
+# dmpc, an mpc wrapper using dmenu
+
+options="\
+play/pause (toggle)\
+\nnext song\
+\nprevious song\
+\nchange song\
+\nupdate database\
+\nrefill queue\
+\nrepeat\
+\nrandom\
+\nsingle\
+\nconsume\
+\nexit\
+"
+
+while true; do
+	# shellcheck disable=SC2059
+	case $(printf "$options" | dmenu -i -p "dmpc | $(mpc | head -n 1)") in
+		"play/pause (toggle)")
+			mpc toggle
+			;;
+		"next song")
+			mpc next
+			;;
+		"previous song")
+			mpc prev
+			;;
+		"change song")
+			mpc playlist | nl -s ' ' | dmenu -i -p "Current song: $(mpc play | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
+			;;
+		"update database")
+			mpc update
+			;;
+		"refill queue")
+			mpc clear && mpc ls | mpc add
+			;;
+		"repeat")
+			mpc repeat
+			;;
+		"random")
+			mpc random
+			;;
+		"single")
+			mpc single
+			;;
+		"consume")
+			mpc consume
+			;;
+		*)
+			break
+			;;
+	esac
+done
+
+#mpc playlist | nl -s ' ' | dmenu -p "Current song: $(mpc play | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
