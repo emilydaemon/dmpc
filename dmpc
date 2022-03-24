@@ -53,5 +53,3 @@ while true; do
 			;;
 	esac
 done
-
-#mpc playlist | nl -s ' ' | dmenu -p "Current song: $(mpc play | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
