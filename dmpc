@@ -13,11 +13,14 @@ play/pause (toggle)\
 \nsingle\
 \nconsume\
 \nexit\
+\n\
+\n\
 "
 
 while true; do
+	i_hate_sh="$(mpc | grep -v '\[.*\]')" # GNU/God, why can't double and single quotes be the same?
 	# shellcheck disable=SC2059
-	case $(printf "$options" | dmenu -i -p "dmpc | $(mpc | head -n 1)") in
+	case $(echo "$options$i_hate_sh" | dmenu -i -p dmpc) in
 		"play/pause (toggle)")
 			mpc toggle
 			;;
