@@ -6,6 +6,7 @@ play/pause (toggle)\
 \nnext song\
 \nprevious song\
 \nchange song\
+\nstop\
 \nupdate database\
 \nrefill queue\
 \nrepeat\
@@ -31,7 +32,10 @@ while true; do
 			mpc prev
 			;;
 		"change song")
-			mpc playlist | nl -s ' ' | dmenu -i -p "Current song: $(mpc | head -n 1)" | awk '{print $1}' | xargs -I {} mpc play "{}"
+			mpc playlist | nl -s ' ' | dmenu -i -p "select song" | awk '{print $1}' | xargs -I {} mpc play "{}"
+			;;
+		"stop")
+			mpc stop
 			;;
 		"update database")
 			mpc update
